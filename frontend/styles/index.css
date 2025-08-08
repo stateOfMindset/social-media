@@ -1,0 +1,37 @@
+/* Posts container */
+#posts {
+  margin-top: 20px;
+}
+
+/* Each post styled like a comment bubble/card */
+#posts div {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  line-height: 1.4;
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+#posts div:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Username and date at the top of each comment */
+#posts div::before {
+  content: attr(data-username) " — " attr(data-date);
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #4b5563; /* gray-600 */
+  margin-bottom: 8px;
+}
+
+/* Optional: make the post text a bit separated */
+#posts div p {
+  margin: 0;
+  white-space: pre-wrap; /* respect line breaks */
+}

@@ -1,0 +1,35 @@
+@MiniSocialAPI_HostAddress = http://localhost:5000
+Access-Control-Allow-Origin: https://localhost:8080
+
+### Signup user
+POST {{MiniSocialAPI_HostAddress}}/api/users/signup
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "passwordHash": "testpass"
+}
+
+### Login user
+POST {{MiniSocialAPI_HostAddress}}/api/users/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "passwordHash": "testpass"
+}
+
+### Get all posts
+GET {{MiniSocialAPI_HostAddress}}/api/posts
+Accept: application/json
+
+###
+
+### Create a new post
+POST {{MiniSocialAPI_HostAddress}}/api/posts
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "content": "Hello world from HTTP file!"
+}
