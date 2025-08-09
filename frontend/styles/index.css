@@ -1,37 +1,88 @@
+/* Navigation bar */
+#navbar {
+    background-color: #333;
+    padding: 10px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+#navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#navbar a:hover {
+    text-decoration: underline;
+}
+
+#navbar span {
+    margin-left: auto;
+    color: white;
+}
+
+#navbar button {
+    background-color: crimson;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
 /* Posts container */
 #posts {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 /* Each post styled like a comment bubble/card */
-#posts div {
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  padding: 15px 20px;
-  margin-bottom: 15px;
-  font-size: 1rem;
-  line-height: 1.4;
-  position: relative;
-  transition: box-shadow 0.3s ease;
+#posts .post {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    line-height: 1.4;
+    position: relative;
+    transition: box-shadow 0.3s ease;
 }
 
-#posts div:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+#posts .post:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 /* Username and date at the top of each comment */
-#posts div::before {
-  content: attr(data-username) " — " attr(data-date);
-  display: block;
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: #4b5563; /* gray-600 */
-  margin-bottom: 8px;
+#posts .post-header {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #4b5563;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
 }
 
-/* Optional: make the post text a bit separated */
-#posts div p {
-  margin: 0;
-  white-space: pre-wrap; /* respect line breaks */
+/* Post content */
+#posts p {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+/* Post actions */
+.post-actions {
+    margin-top: 10px;
+}
+
+.post-actions button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
+
+.post-actions button:hover {
+    background-color: #d32f2f;
 }
