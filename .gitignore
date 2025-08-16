@@ -40,3 +40,5 @@ backend/MiniSocialAPI/bin/Debug/net9.0/MiniSocialAPI.staticwebassets.endpoints.j
 backend/MiniSocialAPI/bin/Debug/net9.0/Data/posts.json
 backend/MiniSocialAPI/bin/Debug/net9.0/Data/users.json
 backend/MiniSocialAPI/obj/Debug/net9.0/MiniSocialAPI.sourcelink.json
+Flags.png
+/backend/MiniSocialAPI/obj

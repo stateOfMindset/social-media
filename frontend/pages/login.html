@@ -1,21 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login / Signup</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../styles/login.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login / Signup</title>
+  <link rel="stylesheet" href="../styles/login.css" />
+
+  <!-- Frontend CSP + anti‑clickjacking via frame-ancestors. Final fix in backend headers. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://localhost:5000; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer" />
 </head>
 <body>
-    <h1>Login</h1>
-    <input type="text" id="loginUsername" placeholder="Username" />
-    <input type="password" id="loginPassword" placeholder="Password" />
-    <button id="loginBtn">Login</button>
+  <h1>Login</h1>
+  <input type="text" id="loginUsername" placeholder="Username" autocomplete="username" />
+  <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password" />
+  <button id="loginBtn" type="button">Login</button>
 
-    <h1>Signup</h1>
-    <input type="text" id="signupUsername" placeholder="Username" />
-    <input type="password" id="signupPassword" placeholder="Password" />
-    <button id="signupBtn">Signup</button>
+  <h1>Signup</h1>
+  <input type="text" id="signupUsername" placeholder="Username" autocomplete="username" />
+  <input type="password" id="signupPassword" placeholder="Password" autocomplete="new-password" />
+  <button id="signupBtn" type="button">Signup</button>
 
-    <script src="../scripts/login.js"></script>
+  <script src="../scripts/login.js" defer></script>
 </body>
 </html>

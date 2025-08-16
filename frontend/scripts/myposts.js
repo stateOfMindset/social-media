@@ -1,81 +1,93 @@
-const apiUrl = "http://localhost:5000/api/posts";
-
-// Check login
-const username = localStorage.getItem("username");
-if (!username) {
-    window.location.href = "login.html";
-} else {
-    document.getElementById("userDisplayNav").textContent = username;
+// 🔒 Safe helper to escape/strip potential dangerous input
+function sanitizeInput(str) {
+  const temp = document.createElement("div");
+  temp.textContent = str;  // textContent ensures no HTML is executed
+  return temp.innerHTML;
 }
 
-// Logout
-document.getElementById("logoutBtn").onclick = () => {
-    localStorage.clear();
-    window.location.href = "login.html";
-};
-
-// Load my posts
-async function loadMyPosts() {
-    const res = await fetch(`${apiUrl}/mine?username=${encodeURIComponent(username)}`);
-    if (!res.ok) {
-        alert("Failed to load your posts.");
-        return;
-    }
-    const posts = await res.json();
-
-    const myPostsDiv = document.getElementById("myPosts");
-    myPostsDiv.innerHTML = "";
-
-    if (posts.length === 0) {
-        myPostsDiv.textContent = "You haven't posted anything yet.";
-        return;
-    }
-
-    posts.forEach(post => {
-        const wrapper = document.createElement("div");
-        wrapper.classList.add("post");
-
-        const date = new Date(post.createdAt).toLocaleString();
-        wrapper.innerHTML = `
-            <p>${post.content}</p>
-            <small>Posted on ${date}</small><br>
-            <button onclick="editPost(${post.id}, \`${post.content.replace(/`/g, "\\`")}\`)">Edit</button>
-            <button onclick="deletePost(${post.id})">Delete</button>
-        `;
-
-        myPostsDiv.appendChild(wrapper);
-    });
-}
-
-// Delete a post
-async function deletePost(id) {
-    if (!confirm("Are you sure you want to delete this post?")) return;
-
-    const res = await fetch(`${apiUrl}/${id}`, { method: "DELETE" });
-    if (res.ok) {
-        loadMyPosts();
-    } else {
-        alert("Failed to delete post.");
-    }
-}
-
-// Edit a post
-async function editPost(id, oldContent) {
-    const newContent = prompt("Edit your post:", oldContent);
-    if (newContent === null || newContent.trim() === "") return;
-
-    const res = await fetch(`${apiUrl}/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newContent.trim())
+async function fetchPosts() {
+  try {
+    const response = await fetch("/api/posts", {
+      method: "GET",
+      credentials: "include", // secure cookie sessions
+      headers: { "Accept": "application/json" }
     });
 
-    if (res.ok) {
-        loadMyPosts();
-    } else {
-        alert("Failed to update post.");
-    }
+    if (!response.ok) throw new Error("Failed to fetch posts");
+
+    const posts = await response.json();
+    renderPosts(posts);
+  } catch (err) {
+    console.error("Error fetching posts:", err);
+    document.getElementById("postsList").textContent = "Could not load posts.";
+  }
 }
 
-// Initial load
-loadMyPosts();
+function renderPosts(posts) {
+  const postsList = document.getElementById("postsList");
+  postsList.innerHTML = "";
+
+  if (!Array.isArray(posts) || posts.length === 0) {
+    postsList.textContent = "No posts yet.";
+    return;
+  }
+
+  posts.forEach(post => {
+    const postDiv = document.createElement("div");
+    postDiv.className = "post";
+
+    const userSpan = document.createElement("span");
+    userSpan.className = "post-user";
+    userSpan.textContent = sanitizeInput(post.username || "Unknown");
+
+    const textP = document.createElement("p");
+    textP.className = "post-text";
+    textP.textContent = sanitizeInput(post.text || "");
+
+    postDiv.appendChild(userSpan);
+    postDiv.appendChild(textP);
+    postsList.appendChild(postDiv);
+  });
+}
+
+async function submitPost() {
+  const newPost = document.getElementById("newPost").value.trim();
+
+  // 🔒 Validate before sending
+  if (newPost.length === 0) {
+    alert("Post cannot be empty.");
+    return;
+  }
+  if (newPost.length > 500) {
+    alert("Post too long (max 500 characters).");
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/posts", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ text: newPost })
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.message || "Failed to submit post");
+    }
+
+    document.getElementById("newPost").value = "";
+    await fetchPosts(); // Refresh posts
+  } catch (err) {
+    console.error("Error submitting post:", err);
+    alert("Failed to submit post. Please try again.");
+  }
+}
+
+document.getElementById("submitPost").addEventListener("click", submitPost);
+
+// Load posts on page ready
+window.addEventListener("DOMContentLoaded", fetchPosts);

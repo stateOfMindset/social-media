@@ -1,32 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Mini Social Media</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../styles/index.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini Social Media</title>
+  <link rel="stylesheet" href="../styles/index.css" />
+
+  <!-- Security: CSP to mitigate XSS and Clickjacking on the frontend. Final fix in backend headers. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://localhost:5000; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer" />
 </head>
 <body>
-
-<!-- Navigation Menu -->
-<nav id="navbar">
+  <!-- Navigation Menu -->
+  <nav id="navbar">
     <a href="index.html">Home</a>
     <a href="myposts.html">My Posts</a>
     <a href="admin.html" id="adminLink" style="display:none;">Admin Panel</a>
     <span id="userDisplayNav"></span>
-    <button id="logoutBtn">Logout</button>
-</nav>
+    <button id="logoutBtn" type="button">Logout</button>
+  </nav>
 
-<h2>Welcome, <span id="userDisplay"></span>!</h2>
+  <h2>Welcome, <span id="userDisplay"></span>!</h2>
 
-<div id="postSection">
+  <div id="postSection">
     <h3>Create a Post</h3>
     <textarea id="postText" rows="4" cols="50" placeholder="Write your post here..."></textarea><br />
-    <button id="submitPost">Submit Post</button>
-</div>
+    <button id="submitPost" type="button">Submit Post</button>
+  </div>
 
-<h3>Posts</h3>
-<div id="posts"></div>
+  <h3>Posts</h3>
+  <div id="posts" aria-live="polite"></div>
 
-<script src="../scripts/index.js"></script>
+  <script src="../scripts/index.js" defer></script>
 </body>
 </html>

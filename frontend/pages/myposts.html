@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Posts - Mini Social Media</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="../styles/index.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 🔒 Security Headers (client-side fallback; also enforce on backend) -->
+  <meta http-equiv="Content-Security-Policy" 
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Referrer-Policy" content="no-referrer" />
+
+  <title>My Posts</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <h1>My Posts</h1>
 
-<!-- Navigation Menu -->
-<nav id="navbar">
-    <a href="index.html">Home</a>
-    <a href="myposts.html">My Posts</a>
-    <a href="admin.html" id="adminLink" style="display:none;">Admin Panel</a>
-    <span id="userDisplayNav"></span>
-    <button id="logoutBtn">Logout</button>
-</nav>
+  <div id="postForm">
+    <textarea id="newPost" placeholder="Write your post..." maxlength="500"></textarea>
+    <button id="submitPost">Submit</button>
+  </div>
 
-<h2>My Posts</h2>
-<div id="myPosts"></div>
+  <div id="postsList"></div>
 
-<script src="../scripts/myposts.js"></script>
+  <script src="myposts.js"></script>
 </body>
 </html>
