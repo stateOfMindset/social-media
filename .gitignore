@@ -46,3 +46,5 @@ Flags.png
 /.vs
 /~$ח פרוייקט סייבר .docx
 /~$ח פרוייקט סייבר .docx
+/backend/MiniSocialAPI/Controller/UsersController.cs
+/backend/MiniSocialAPI/Controller/PostsController.cs
