@@ -20,7 +20,6 @@ async function login() {
         // Save user info in localStorage
         localStorage.setItem("username", data.username);
         localStorage.setItem("role", data.role || "User");
-        alert("Login successful!");
         window.location.href = "index.html";
     } else {
         alert(await res.text());

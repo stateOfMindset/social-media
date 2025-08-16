@@ -4,7 +4,7 @@ const apiUrl = "http://localhost:5000/api/posts";
 const username = localStorage.getItem("username");
 const isAdmin = localStorage.getItem("isAdmin") === "true";
 
-if (!username) {
+ if (!username) {
     window.location.href = "login.html";
 } else {
     document.getElementById("userDisplay").textContent = username;
@@ -15,10 +15,12 @@ if (isAdmin) {
     document.getElementById("adminLink").style.display = "inline";
 }
 
+
 document.getElementById("logoutBtn").onclick = () => {
     localStorage.clear();
     window.location.href = "login.html";
 };
+
 
 async function loadPosts() {
     const res = await fetch(apiUrl);
